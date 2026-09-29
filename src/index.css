@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-mik-bg: #000000;
+  --color-mik-yellow: #FFFFFF;
+  --color-mik-white: #FFFFFF;
+  --color-mik-border: rgba(255, 255, 255, 0.08);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-mik-border);
+  }
+
+  html,
+  body {
+    background-color: #000000;
+    color: #F8F8FA;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+}
+
+/* Monumental Hero Typography Scaling */
+.monumental-text {
+  font-family: 'Bebas Neue', sans-serif;
+  line-height: 0.85;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  user-select: none;
+}
+
+/* Subtle cinematic noise overlay */
+.cinematic-vignette {
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.35) 75%,
+    rgba(0, 0, 0, 0.8) 100%
+  );
+  pointer-events: none;
+}
+
+/* Brilliant White Accents & Neon Glow */
+.text-mik-yellow {
+  color: #FFFFFF;
+  text-shadow: 0 0 14px rgba(255, 255, 255, 0.65);
+}
+
+.bg-mik-yellow {
+  background-color: #FFFFFF;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.6), 0 0 40px rgba(255, 255, 255, 0.25);
+}
+
+.glow-white-neon {
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.65), 0 0 40px rgba(255, 255, 255, 0.3);
+}
+
+.text-glow-white {
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 255, 255, 0.45);
+}
+
+/* Custom hairline borders */
+.border-hairline {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.border-hairline-b {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.border-hairline-t {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Smooth transitions */
+.transition-luxury {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}

@@ -1,0 +1,3 @@
+[14236:7360:0929/175436.246:INFO:components\enterprise\browser\controller\chrome_browser_cloud_management_controller.cc:241] No machine level policy manager exists.
+[14236:7360:0929/175439.449:INFO:CONSOLE:743] "[vite] connecting...", source: http://localhost:3000/@vite/client (743)
+[14236:7360:0929/175439.457:INFO:CONSOLE:866] "[vite] connected.", source: http://localhost:3000/@vite/client (866)
