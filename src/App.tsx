@@ -3,8 +3,7 @@ import { useMousePosition } from './hooks/useMousePosition';
 import { HeaderFrame } from './components/layout/HeaderFrame';
 import { Experience } from './experience/Experience';
 import { HeaderSection } from './sections/Header/HeaderSection';
-import { BodyPlaceholder } from './sections/Body/BodyPlaceholder';
-import { AboutSection } from './sections/About/AboutSection';
+import { SecondSection } from './sections/SecondSection/SecondSection';
 import { FooterPlaceholder } from './sections/Footer/FooterPlaceholder';
 import { NavTarget } from './types';
 
@@ -86,11 +85,8 @@ export const App: React.FC = () => {
           />
         </div>
 
-        {/* Zone 2: Projects Foundation (Solar System / Projects Phase 02) */}
-        <BodyPlaceholder />
-
-        {/* Zone 3: About Foundation (Architect Identity & Dossier) */}
-        <AboutSection />
+        {/* Zone 2: Cinematic Universe Journey (Planets 01-04 & Sun Destination) */}
+        <SecondSection />
 
         {/* Zone 4: Footer Foundation (Contact & Terminal Phase 03) */}
         <FooterPlaceholder />
