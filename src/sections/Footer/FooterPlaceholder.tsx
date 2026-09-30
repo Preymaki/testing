@@ -12,7 +12,7 @@ export const FooterPlaceholder: React.FC = () => {
       <div className="flex flex-col items-center gap-4">
         <BrandMark />
         <span className="font-mono text-xs tracking-wider text-white/40">
-          ZONE 03 // CONTACT & TERMINAL FOUNDATION
+          ZONE 04 // CONTACT & TERMINAL FOUNDATION
         </span>
       </div>
 

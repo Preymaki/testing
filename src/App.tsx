@@ -4,6 +4,7 @@ import { HeaderFrame } from './components/layout/HeaderFrame';
 import { Experience } from './experience/Experience';
 import { HeaderSection } from './sections/Header/HeaderSection';
 import { BodyPlaceholder } from './sections/Body/BodyPlaceholder';
+import { AboutSection } from './sections/About/AboutSection';
 import { FooterPlaceholder } from './sections/Footer/FooterPlaceholder';
 import { NavTarget } from './types';
 
@@ -17,8 +18,8 @@ export const App: React.FC = () => {
     setActiveTarget(target);
     const targetMap: Record<NavTarget, string> = {
       home: 'zone-header',
-      about: 'zone-about',
       projects: 'zone-projects',
+      about: 'zone-about',
       contact: 'zone-contact',
     };
 
@@ -28,25 +29,38 @@ export const App: React.FC = () => {
     }
   };
 
-  // Sync active target with scroll position
+  // Sync active target with scroll position using IntersectionObserver
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      const windowHeight = window.innerHeight;
+    const sequence: { id: NavTarget; elementId: string }[] = [
+      { id: 'home', elementId: 'zone-header' },
+      { id: 'projects', elementId: 'zone-projects' },
+      { id: 'about', elementId: 'zone-about' },
+      { id: 'contact', elementId: 'zone-contact' },
+    ];
 
-      if (scrollY < windowHeight * 0.4) {
-        setActiveTarget('home');
-      } else if (scrollY < windowHeight * 1.0) {
-        setActiveTarget('about');
-      } else if (scrollY < windowHeight * 1.5) {
-        setActiveTarget('projects');
-      } else {
-        setActiveTarget('contact');
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const intersecting = entries.filter((e) => e.isIntersecting);
+        if (intersecting.length > 0) {
+          intersecting.sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+          const activeItem = sequence.find((s) => s.elementId === intersecting[0].target.id);
+          if (activeItem) {
+            setActiveTarget(activeItem.id);
+          }
+        }
+      },
+      {
+        rootMargin: '-20% 0px -20% 0px',
+        threshold: [0.1, 0.3, 0.6],
       }
-    };
+    );
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    sequence.forEach(({ elementId }) => {
+      const el = document.getElementById(elementId);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
   }, []);
 
   return (
@@ -59,9 +73,8 @@ export const App: React.FC = () => {
 
       {/* Main One-Page Cinematic Experience */}
       <main id="main-content" className="relative w-full">
-        {/* Header Zone Container */}
+        {/* Zone 1: Header (Origin / 3D Canvas Layer) */}
         <div className="relative w-full h-screen overflow-hidden">
-          {/* 3D Canvas Layer */}
           <ErrorBoundary fallbackTitle="3D Canvas Layer">
             <Experience mousePos={mousePos} />
           </ErrorBoundary>
@@ -73,10 +86,13 @@ export const App: React.FC = () => {
           />
         </div>
 
-        {/* Zone 2: Body Foundation (Solar System / Projects Phase 02) */}
+        {/* Zone 2: Projects Foundation (Solar System / Projects Phase 02) */}
         <BodyPlaceholder />
 
-        {/* Zone 3: Footer Foundation (Contact & Terminal Phase 03) */}
+        {/* Zone 3: About Foundation (Architect Identity & Dossier) */}
+        <AboutSection />
+
+        {/* Zone 4: Footer Foundation (Contact & Terminal Phase 03) */}
         <FooterPlaceholder />
       </main>
     </div>

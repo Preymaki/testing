@@ -1,4 +1,4 @@
-export type NavTarget = 'home' | 'about' | 'projects' | 'contact';
+export type NavTarget = 'home' | 'projects' | 'about' | 'contact';
 
 export interface NavItem {
   id: NavTarget;

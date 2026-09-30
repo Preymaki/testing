@@ -4,8 +4,8 @@ import { Menu, X } from 'lucide-react';
 
 export const NAV_ITEMS: NavItem[] = [
   { id: 'home', label: 'Home', targetId: 'zone-header', tag: '01' },
-  { id: 'about', label: 'About', targetId: 'zone-about', tag: '02' },
-  { id: 'projects', label: 'Projects', targetId: 'zone-projects', tag: '03' },
+  { id: 'projects', label: 'Projects', targetId: 'zone-projects', tag: '02' },
+  { id: 'about', label: 'About', targetId: 'zone-about', tag: '03' },
   { id: 'contact', label: 'Contact', targetId: 'zone-contact', tag: '04' },
 ];
 
