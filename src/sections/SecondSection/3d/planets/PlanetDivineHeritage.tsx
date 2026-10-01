@@ -66,38 +66,41 @@ export const PlanetDivineHeritage: React.FC<PlanetProps> = ({ pointer }) => {
 
   return (
     <group ref={groupRef}>
-      {/* Terrestrial Nurturing Core: Frosted Ivory / Warm Mineral Sphere */}
+      {/* Terrestrial Nurturing Core: Deep Polished Jade-Obsidian Sphere */}
       <mesh ref={coreRef} castShadow receiveShadow>
         <sphereGeometry args={[1.15, 48, 48]} />
         <meshStandardMaterial
-          color="#161514"
-          metalness={0.4}
-          roughness={0.45}
-          emissive="#2A241F"
+          color="#07130E"
+          metalness={0.65}
+          roughness={0.3}
+          emissive="#003822"
+          emissiveIntensity={0.65}
+        />
+      </mesh>
+
+      {/* Cloud / Atmospheric Film Layer (Neo Mint Wireframe) */}
+      <mesh>
+        <sphereGeometry args={[1.2, 32, 32]} />
+        <meshStandardMaterial
+          color="#00F5A0"
+          transparent
+          opacity={0.38}
+          wireframe
+          emissive="#00F5A0"
           emissiveIntensity={0.5}
         />
       </mesh>
 
-      {/* Cloud / Atmospheric Film Layer */}
-      <mesh>
-        <sphereGeometry args={[1.2, 32, 32]} />
-        <meshStandardMaterial
-          color="#EAE5DC"
-          transparent
-          opacity={0.18}
-          wireframe
-        />
-      </mesh>
-
-      {/* Saturn-Style Majestic Dust Ring */}
+      {/* Saturn-Style Majestic Dust Ring (Neo Cyber Mint) */}
       <group ref={ringRef} rotation={[0.45, 0.2, 0.6]}>
         <mesh>
           <ringGeometry args={[1.7, 2.65, 64]} />
           <meshBasicMaterial
-            color="#D8C9B4"
+            color="#00F5A0"
             side={THREE.DoubleSide}
             transparent
-            opacity={0.16}
+            opacity={0.24}
+            blending={THREE.AdditiveBlending}
           />
         </mesh>
 
@@ -109,34 +112,34 @@ export const PlanetDivineHeritage: React.FC<PlanetProps> = ({ pointer }) => {
             />
           </bufferGeometry>
           <pointsMaterial
-            size={0.035}
-            color="#F2E8DC"
+            size={0.038}
+            color="#7CFBD0"
             transparent
-            opacity={0.7}
+            opacity={0.9}
             blending={THREE.AdditiveBlending}
           />
         </points>
       </group>
 
-      {/* Guardian Moon 01 */}
+      {/* Guardian Moon 01 (Radiant Neo Mint Luminous Orb) */}
       <mesh ref={moon1Ref}>
         <sphereGeometry args={[0.09, 16, 16]} />
-        <meshStandardMaterial color="#FFFFFF" emissive="#FFFFFF" emissiveIntensity={0.4} />
+        <meshStandardMaterial color="#E6FFFA" emissive="#00F5A0" emissiveIntensity={0.9} />
       </mesh>
 
-      {/* Guardian Moon 02 */}
+      {/* Guardian Moon 02 (Sub-Orbital Mint Companion) */}
       <mesh ref={moon2Ref}>
         <sphereGeometry args={[0.065, 16, 16]} />
-        <meshStandardMaterial color="#E2DCD5" emissive="#E2DCD5" emissiveIntensity={0.3} />
+        <meshStandardMaterial color="#A7F3D0" emissive="#10B981" emissiveIntensity={0.7} />
       </mesh>
 
-      {/* Warm Golden Atmospheric Rim */}
+      {/* Neo Mint / Emerald Atmospheric Rim Halo */}
       <mesh>
         <sphereGeometry args={[1.35, 32, 32]} />
         <meshBasicMaterial
-          color="#D97706"
+          color="#00F5A0"
           transparent
-          opacity={0.05}
+          opacity={0.14}
           side={THREE.BackSide}
           blending={THREE.AdditiveBlending}
         />

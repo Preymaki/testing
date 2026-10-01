@@ -54,56 +54,76 @@ export const PlanetExploreMore: React.FC<PlanetProps> = ({ pointer }) => {
 
   return (
     <group ref={groupRef}>
-      {/* Central Quantum Geometric Core: Pulsing nested Wireframe Dodecahedron */}
+      {/* Central Quantum Geometric Core: Pulsing nested Wireframe Dodecahedron (Neo Quantum Violet) */}
       <mesh ref={coreRef}>
         <dodecahedronGeometry args={[0.9, 0]} />
         <meshStandardMaterial
-          color="#FFFFFF"
+          color="#A855F7"
           wireframe
           transparent
-          opacity={0.7}
-          emissive="#FFFFFF"
-          emissiveIntensity={0.6}
+          opacity={0.8}
+          emissive="#9333EA"
+          emissiveIntensity={0.85}
         />
       </mesh>
 
-      {/* Inner Energy Sphere */}
+      {/* Inner Energy Sphere (Superheated Violet-White Plasma) */}
       <mesh>
         <sphereGeometry args={[0.45, 24, 24]} />
-        <meshBasicMaterial color="#FFFFFF" transparent opacity={0.8} />
+        <meshBasicMaterial
+          color="#F3E8FF"
+          transparent
+          opacity={0.9}
+          blending={THREE.AdditiveBlending}
+        />
       </mesh>
 
-      {/* Gimbal Ring 1: X-Axis Orbit */}
+      {/* Gimbal Ring 1: X-Axis Orbit (Electric Lavender) */}
       <group ref={gimbalXRef}>
         <mesh>
           <torusGeometry args={[1.5, 0.018, 16, 64]} />
-          <meshBasicMaterial color="#FFFFFF" transparent opacity={0.4} />
+          <meshBasicMaterial
+            color="#C084FC"
+            transparent
+            opacity={0.55}
+            blending={THREE.AdditiveBlending}
+          />
         </mesh>
       </group>
 
-      {/* Gimbal Ring 2: Y-Axis Orbit */}
+      {/* Gimbal Ring 2: Y-Axis Orbit (Neo Violet) */}
       <group ref={gimbalYRef}>
         <mesh>
           <torusGeometry args={[1.8, 0.018, 16, 64]} />
-          <meshBasicMaterial color="#FFFFFF" transparent opacity={0.3} />
+          <meshBasicMaterial
+            color="#A855F7"
+            transparent
+            opacity={0.45}
+            blending={THREE.AdditiveBlending}
+          />
         </mesh>
       </group>
 
-      {/* Gimbal Ring 3: Z-Axis Orbit */}
+      {/* Gimbal Ring 3: Z-Axis Orbit (Deep Quantum Purple) */}
       <group ref={gimbalZRef}>
         <mesh>
           <torusGeometry args={[2.1, 0.018, 16, 64]} />
-          <meshBasicMaterial color="#FFFFFF" transparent opacity={0.2} />
+          <meshBasicMaterial
+            color="#8B5CF6"
+            transparent
+            opacity={0.38}
+            blending={THREE.AdditiveBlending}
+          />
         </mesh>
       </group>
 
-      {/* Portal Event Horizon Halo */}
+      {/* Portal Event Horizon Halo (Expansive Violet Radiance) */}
       <mesh>
-        <sphereGeometry args={[1.6, 32, 32]} />
+        <sphereGeometry args={[1.65, 32, 32]} />
         <meshBasicMaterial
-          color="#A855F7"
+          color="#7C3AED"
           transparent
-          opacity={0.04}
+          opacity={0.15}
           side={THREE.BackSide}
           blending={THREE.AdditiveBlending}
         />

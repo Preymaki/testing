@@ -47,39 +47,46 @@ export const PlanetMaki: React.FC<PlanetProps> = ({ pointer }) => {
 
   return (
     <group ref={groupRef}>
-      {/* Central Faceted Neo-Cyber Crystal: Low-Poly Faceted Icosahedron */}
+      {/* Central Faceted Neo-Cyber Crystal: Low-Poly Faceted Icosahedron (Obsidian Magenta) */}
       <mesh ref={gemRef} castShadow receiveShadow>
         <icosahedronGeometry args={[1.2, 1]} />
         <meshStandardMaterial
-          color="#0D0E12"
+          color="#13061A"
           metalness={0.95}
           roughness={0.12}
           flatShading
-          emissive="#FFFFFF"
-          emissiveIntensity={0.08}
+          emissive="#4A044E"
+          emissiveIntensity={0.5}
         />
       </mesh>
 
-      {/* Crystalline Wireframe Edge Overlay */}
+      {/* Crystalline Wireframe Edge Overlay (Neo Royal Magenta) */}
       <mesh>
         <icosahedronGeometry args={[1.22, 1]} />
-        <meshBasicMaterial
-          color="#FFFFFF"
+        <meshStandardMaterial
+          color="#E024C3"
           wireframe
           transparent
-          opacity={0.35}
+          opacity={0.55}
+          emissive="#D946EF"
+          emissiveIntensity={0.7}
         />
       </mesh>
 
       {/* Floating Royal Crown Diadem (Representing Maki Is King crown motif) */}
       <group ref={crownRingRef} position={[0, 0.85, 0]}>
-        {/* Crown Base Torus Ring */}
+        {/* Crown Base Torus Ring (Electric Cyber Orchid) */}
         <mesh>
-          <torusGeometry args={[1.35, 0.02, 16, 64]} />
-          <meshBasicMaterial color="#FFFFFF" transparent opacity={0.65} />
+          <torusGeometry args={[1.35, 0.022, 16, 64]} />
+          <meshBasicMaterial
+            color="#F038FF"
+            transparent
+            opacity={0.85}
+            blending={THREE.AdditiveBlending}
+          />
         </mesh>
 
-        {/* Crown Crown Spikes / Jewels (8 cardinal points) */}
+        {/* Crown Crown Spikes / Jewels (8 cardinal points - Glowing Diamond Magenta) */}
         {Array.from({ length: 8 }).map((_, i) => {
           const angle = (i / 8) * Math.PI * 2;
           const x = Math.cos(angle) * 1.35;
@@ -87,12 +94,13 @@ export const PlanetMaki: React.FC<PlanetProps> = ({ pointer }) => {
           return (
             <group key={i} position={[x, 0.12, z]}>
               <mesh>
-                <octahedronGeometry args={[0.07, 0]} />
+                <octahedronGeometry args={[0.075, 0]} />
                 <meshStandardMaterial
-                  color="#FFFFFF"
-                  emissive="#FFFFFF"
-                  emissiveIntensity={0.9}
-                  metalness={1}
+                  color="#FFD6FA"
+                  emissive="#E024C3"
+                  emissiveIntensity={1.4}
+                  metalness={0.9}
+                  roughness={0.1}
                 />
               </mesh>
             </group>
@@ -100,23 +108,24 @@ export const PlanetMaki: React.FC<PlanetProps> = ({ pointer }) => {
         })}
       </group>
 
-      {/* Ambient Orbiting Spatial Rings */}
+      {/* Ambient Orbiting Spatial Rings (Neo Magenta) */}
       <mesh ref={haloRef} rotation={[Math.PI / 2.2, 0, 0]}>
-        <torusGeometry args={[2.0, 0.015, 16, 80]} />
+        <torusGeometry args={[2.0, 0.016, 16, 80]} />
         <meshBasicMaterial
-          color="#FFFFFF"
+          color="#E024C3"
           transparent
-          opacity={0.25}
+          opacity={0.35}
+          blending={THREE.AdditiveBlending}
         />
       </mesh>
 
-      {/* Royal Silver/Cyan Atmospheric Glow */}
+      {/* Royal Magenta Atmospheric Glow */}
       <mesh>
         <sphereGeometry args={[1.4, 32, 32]} />
         <meshBasicMaterial
-          color="#FFFFFF"
+          color="#E024C3"
           transparent
-          opacity={0.05}
+          opacity={0.14}
           side={THREE.BackSide}
           blending={THREE.AdditiveBlending}
         />

@@ -153,27 +153,27 @@ export const UniverseBackground3D: React.FC<UniverseBackground3DProps> = ({
         {/* CELESTIAL STATIONS: Positioned spatially along the flight path */}
         {/* ============================================================== */}
 
-        {/* Station 01: CirSave (Obsidian Cryptographic Core & Ledger Rings) */}
+        {/* Station 01: CirSave (Neo Electric Cyan Cryptographic Core & Ledger Rings) */}
         <group position={[-2.4, 0, -16]}>
-          <pointLight position={[2, 3, 3]} intensity={3.5} color="#FFFFFF" distance={15} />
+          <pointLight position={[2, 3, 3]} intensity={4.2} color="#00F0FF" distance={18} />
           <PlanetCirSave pointer={pointer} />
         </group>
 
-        {/* Station 02: Divine Heritage (Terrestrial Ivory Core, Saturn Dust Rings & Moons) */}
+        {/* Station 02: Divine Heritage (Neo Cyber Mint Jade Core, Dust Rings & Moons) */}
         <group position={[2.4, 0, -42]}>
-          <pointLight position={[-2, 3, 3]} intensity={4.0} color="#FFFFFF" distance={15} />
+          <pointLight position={[-2, 3, 3]} intensity={4.2} color="#00F5A0" distance={18} />
           <PlanetDivineHeritage pointer={pointer} />
         </group>
 
-        {/* Station 03: Maki Is King (Faceted Cybernetic Gem & Royal Crown Diadem) */}
+        {/* Station 03: Maki Is King (Neo Royal Magenta Faceted Gem & Crown Diadem) */}
         <group position={[-2.4, 0, -68]}>
-          <pointLight position={[2, 3, 3]} intensity={4.2} color="#FFFFFF" distance={15} />
+          <pointLight position={[2, 3, 3]} intensity={4.4} color="#E024C3" distance={18} />
           <PlanetMaki pointer={pointer} />
         </group>
 
-        {/* Station 04: Explore More (Pulsating Quantum Dodecahedron & Gimbal Rings) */}
+        {/* Station 04: Explore More (Neo Quantum Violet Dodecahedron & Gimbals) */}
         <group position={[2.4, 0, -94]}>
-          <pointLight position={[-2, 3, 3]} intensity={3.8} color="#C084FC" distance={15} />
+          <pointLight position={[-2, 3, 3]} intensity={4.2} color="#A855F7" distance={18} />
           <PlanetExploreMore pointer={pointer} />
         </group>
 

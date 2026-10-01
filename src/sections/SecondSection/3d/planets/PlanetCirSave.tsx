@@ -75,36 +75,36 @@ export const PlanetCirSave: React.FC<PlanetProps> = ({ pointer }) => {
       <mesh ref={coreRef} castShadow receiveShadow>
         <sphereGeometry args={[1.2, 48, 48]} />
         <meshStandardMaterial
-          color="#06080D"
-          metalness={0.92}
-          roughness={0.22}
-          emissive="#0A1120"
+          color="#040810"
+          metalness={0.94}
+          roughness={0.18}
+          emissive="#002B47"
           emissiveIntensity={0.6}
         />
       </mesh>
 
-      {/* Outer Cryptographic Wireframe Lattice Cage */}
+      {/* Outer Cryptographic Wireframe Lattice Cage (Neo Electric Cyan) */}
       <mesh ref={cageRef}>
         <icosahedronGeometry args={[1.35, 2]} />
         <meshStandardMaterial
-          color="#FFFFFF"
+          color="#00F0FF"
           wireframe
           transparent
-          opacity={0.28}
-          emissive="#FFFFFF"
-          emissiveIntensity={0.4}
+          opacity={0.45}
+          emissive="#00C2FF"
+          emissiveIntensity={0.7}
         />
       </mesh>
 
-      {/* Primary Equatorial Orbital Ring */}
+      {/* Primary Equatorial Orbital Ring (Neo Cyan Glow) */}
       <group ref={ring1Ref} rotation={[Math.PI / 3, 0.2, 0]}>
         <mesh>
           <ringGeometry args={[1.85, 1.95, 64]} />
           <meshBasicMaterial
-            color="#FFFFFF"
+            color="#00F0FF"
             side={THREE.DoubleSide}
             transparent
-            opacity={0.35}
+            opacity={0.45}
           />
         </mesh>
       </group>
@@ -114,10 +114,10 @@ export const PlanetCirSave: React.FC<PlanetProps> = ({ pointer }) => {
         <mesh>
           <ringGeometry args={[2.15, 2.2, 64]} />
           <meshBasicMaterial
-            color="#FFFFFF"
+            color="#00C2FF"
             side={THREE.DoubleSide}
             transparent
-            opacity={0.2}
+            opacity={0.3}
           />
         </mesh>
 
@@ -130,22 +130,22 @@ export const PlanetCirSave: React.FC<PlanetProps> = ({ pointer }) => {
             />
           </bufferGeometry>
           <pointsMaterial
-            size={0.045}
-            color="#FFFFFF"
+            size={0.048}
+            color="#A6F7FF"
             transparent
-            opacity={0.85}
+            opacity={0.95}
             blending={THREE.AdditiveBlending}
           />
         </points>
       </group>
 
-      {/* Atmospheric Rim Halo */}
+      {/* Atmospheric Rim Halo (Neo Cyan Atmospheric Bloom) */}
       <mesh>
         <sphereGeometry args={[1.42, 32, 32]} />
         <meshBasicMaterial
-          color="#3B82F6"
+          color="#00E5FF"
           transparent
-          opacity={0.06}
+          opacity={0.12}
           side={THREE.BackSide}
           blending={THREE.AdditiveBlending}
         />

@@ -18,6 +18,7 @@ interface StageData {
   linkUrl: string;
   isExternal: boolean;
   align: 'left' | 'right';
+  accentColor: string;
   rangeStart: number;
   peakStart: number;
   peakEnd: number;
@@ -37,6 +38,7 @@ const STAGES: StageData[] = [
     linkUrl: '#',
     isExternal: true,
     align: 'right', // 3D Planet on left -> Text card on right
+    accentColor: '#00F0FF', // Neo Electric Cyan
     rangeStart: 0.06,
     peakStart: 0.11,
     peakEnd: 0.22,
@@ -54,6 +56,7 @@ const STAGES: StageData[] = [
     linkUrl: '#',
     isExternal: true,
     align: 'left', // 3D Planet on right -> Text card on left
+    accentColor: '#00F5A0', // Neo Cyber Mint
     rangeStart: 0.24,
     peakStart: 0.29,
     peakEnd: 0.40,
@@ -71,6 +74,7 @@ const STAGES: StageData[] = [
     linkUrl: '#',
     isExternal: true,
     align: 'right', // 3D Planet on left -> Text card on right
+    accentColor: '#E024C3', // Neo Royal Magenta
     rangeStart: 0.43,
     peakStart: 0.48,
     peakEnd: 0.60,
@@ -88,6 +92,7 @@ const STAGES: StageData[] = [
     linkUrl: '#',
     isExternal: false,
     align: 'left', // 3D Planet on right -> Text card on left
+    accentColor: '#A855F7', // Neo Quantum Violet
     rangeStart: 0.63,
     peakStart: 0.68,
     peakEnd: 0.80,
@@ -106,6 +111,7 @@ const STAGES: StageData[] = [
     linkUrl: '#zone-contact',
     isExternal: false,
     align: 'right', // The White Sun on left -> Text card on right
+    accentColor: '#FFE600', // Neo Solar Yellow
     rangeStart: 0.82,
     peakStart: 0.86,
     peakEnd: 1.0,
@@ -189,16 +195,27 @@ export const ProjectOverlay: React.FC<ProjectOverlayProps> = ({ progress }) => {
             >
               {/* Glassmorphic Minimalist Project Card */}
               <div
-                className="w-full max-w-md sm:max-w-lg p-6 sm:p-8 rounded-2xl bg-[#090A0E]/70 backdrop-blur-2xl border border-white/12 shadow-[0_0_50px_rgba(0,0,0,0.85)] flex flex-col gap-4 text-left transition-transform duration-200"
+                className="w-full max-w-md sm:max-w-lg p-6 sm:p-8 rounded-2xl bg-[#090A0E]/75 backdrop-blur-2xl border border-white/12 flex flex-col gap-4 text-left transition-transform duration-200"
                 style={{
                   transform: `translateY(${translateY}px)`,
+                  boxShadow: `0 0 50px rgba(0,0,0,0.85), 0 0 35px ${stage.accentColor}18`,
+                  borderTop: `1.5px solid ${stage.accentColor}55`,
                 }}
               >
                 {/* Meta Tag & Sector */}
                 <div className="flex items-center justify-between gap-3 pb-1 border-b border-white/8">
                   <div className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.9)]" />
-                    <span className="font-mono text-[10px] tracking-[0.25em] text-white/80 uppercase font-bold">
+                    <span
+                      className="w-1.5 h-1.5 rounded-full"
+                      style={{
+                        backgroundColor: stage.accentColor,
+                        boxShadow: `0 0 8px ${stage.accentColor}`,
+                      }}
+                    />
+                    <span
+                      className="font-mono text-[10px] tracking-[0.25em] uppercase font-bold"
+                      style={{ color: stage.accentColor }}
+                    >
                       {stage.tag}
                     </span>
                   </div>
@@ -235,8 +252,14 @@ export const ProjectOverlay: React.FC<ProjectOverlayProps> = ({ progress }) => {
                 {/* Action Link */}
                 <div className="pt-2">
                   {stage.id === 'explore-more' ? (
-                    <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/[0.04] border border-white/10 font-mono text-xs text-white/50 tracking-widest uppercase">
-                      <Sparkles size={12} className="text-white/40" />
+                    <span
+                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/[0.04] border font-mono text-xs tracking-widest uppercase transition-colors"
+                      style={{
+                        borderColor: `${stage.accentColor}35`,
+                        color: `${stage.accentColor}dd`,
+                      }}
+                    >
+                      <Sparkles size={12} style={{ color: stage.accentColor }} />
                       <span>{stage.linkText}</span>
                     </span>
                   ) : (
@@ -244,7 +267,10 @@ export const ProjectOverlay: React.FC<ProjectOverlayProps> = ({ progress }) => {
                       href={stage.linkUrl}
                       target={stage.isExternal ? '_blank' : undefined}
                       rel={stage.isExternal ? 'noopener noreferrer' : undefined}
-                      className="group inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-white text-black font-mono text-xs font-bold tracking-wider hover:bg-white/90 hover:shadow-[0_0_25px_rgba(255,255,255,0.7)] transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                      className="group inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-white text-black font-mono text-xs font-bold tracking-wider hover:bg-white/95 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                      style={{
+                        boxShadow: `0 0 20px ${stage.accentColor}35`,
+                      }}
                     >
                       <span>{stage.linkText}</span>
                       <ArrowUpRight
