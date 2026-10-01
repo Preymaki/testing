@@ -2,6 +2,7 @@ import React from 'react';
 import { BrandMark } from '../ui/BrandMark';
 import { StatusBadge } from '../ui/StatusBadge';
 import { Navbar } from '../navigation/Navbar';
+import { CelestialAudioToggle } from '../audio/CelestialAudioToggle';
 import { NavTarget } from '../../types';
 
 interface HeaderFrameProps {
@@ -27,8 +28,9 @@ export const HeaderFrame: React.FC<HeaderFrameProps> = ({
         </div>
       </div>
 
-      {/* Right Navigation */}
-      <div className="pointer-events-auto">
+      {/* Right Navigation & Audio Controls */}
+      <div className="flex items-center gap-2.5 sm:gap-3.5 pointer-events-auto">
+        <CelestialAudioToggle />
         <Navbar activeTarget={activeTarget} onSelectTarget={onSelectTarget} />
       </div>
     </header>
