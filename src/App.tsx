@@ -28,38 +28,41 @@ export const App: React.FC = () => {
     }
   };
 
-  // Sync active target with scroll position using IntersectionObserver
+  // Sync active navigation target with real-time scroll position
   useEffect(() => {
-    const sequence: { id: NavTarget; elementId: string }[] = [
-      { id: 'home', elementId: 'zone-header' },
-      { id: 'projects', elementId: 'zone-projects' },
-      { id: 'about', elementId: 'zone-about' },
-      { id: 'contact', elementId: 'zone-contact' },
-    ];
+    const handleScrollNav = () => {
+      const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const docHeight = document.documentElement.scrollHeight;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const intersecting = entries.filter((e) => e.isIntersecting);
-        if (intersecting.length > 0) {
-          intersecting.sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-          const activeItem = sequence.find((s) => s.elementId === intersecting[0].target.id);
-          if (activeItem) {
-            setActiveTarget(activeItem.id);
-          }
-        }
-      },
-      {
-        rootMargin: '-20% 0px -20% 0px',
-        threshold: [0.1, 0.3, 0.6],
+      // Contact / Footer
+      if (scrollY + windowHeight >= docHeight - 80) {
+        setActiveTarget('contact');
+        return;
       }
-    );
 
-    sequence.forEach(({ elementId }) => {
-      const el = document.getElementById(elementId);
-      if (el) observer.observe(el);
-    });
+      // Home / Hero Section
+      if (scrollY < windowHeight * 0.65) {
+        setActiveTarget('home');
+        return;
+      }
 
-    return () => observer.disconnect();
+      // Universe Journey (Projects & About)
+      const aboutEl = document.getElementById('zone-about');
+      if (aboutEl) {
+        const aboutRect = aboutEl.getBoundingClientRect();
+        if (aboutRect.top <= windowHeight * 0.45) {
+          setActiveTarget('about');
+          return;
+        }
+      }
+      setActiveTarget('projects');
+    };
+
+    window.addEventListener('scroll', handleScrollNav, { passive: true });
+    handleScrollNav();
+
+    return () => window.removeEventListener('scroll', handleScrollNav);
   }, []);
 
   return (

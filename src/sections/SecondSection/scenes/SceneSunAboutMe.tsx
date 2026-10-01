@@ -25,7 +25,7 @@ export const SceneSunAboutMe: React.FC = () => {
         <div className="w-full lg:w-5/12 order-1 flex justify-center lg:justify-start">
           <CelestialNegativeSpace
             label="SOLAR DESTINATION"
-            name="THE WHITE SUN"
+            name="THE NEO SUN"
             type="sun"
             coordinates="00 · HELIOS PRIME"
             alignment="left"

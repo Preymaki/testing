@@ -31,6 +31,9 @@ export const HeaderSection: React.FC<HeaderSectionProps> = ({
       {/* Layer 3: Foreground Cinematic Vignette & Ambient Rim */}
       <div className="absolute inset-0 cinematic-vignette pointer-events-none z-25" />
 
+      {/* Layer 3.5: Bottom Horizon Dissolve Mask into Deep Space */}
+      <div className="absolute bottom-0 left-0 w-full h-48 sm:h-64 bg-gradient-to-t from-black via-black/85 via-black/40 to-transparent pointer-events-none z-25" />
+
       {/* Layer 4: Telemetry & Ambient HUD Details (Layered in foreground) */}
       <div className="absolute inset-0 z-30 pointer-events-none flex flex-col justify-between p-6 sm:p-10 md:p-12">
         {/* Top spacer (to offset fixed HeaderFrame) */}
