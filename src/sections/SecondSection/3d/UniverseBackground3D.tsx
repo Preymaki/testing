@@ -73,11 +73,11 @@ const CameraFlightController: React.FC<{
  * Deep Space Cosmic Warp Dust
  * Particles streaming along the flight corridor creating a sensation of 3D speed and depth
  */
-const CosmicWarpDust: React.FC = () => {
+const CosmicWarpDust: React.FC<{ isMobile: boolean }> = ({ isMobile }) => {
   const pointsRef = useRef<THREE.Points>(null);
 
   const [positions] = useMemo(() => {
-    const count = 900;
+    const count = isMobile ? 320 : 900;
     const coords = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
       coords[i * 3] = (Math.random() - 0.5) * 32;     // X spread
@@ -85,7 +85,7 @@ const CosmicWarpDust: React.FC = () => {
       coords[i * 3 + 2] = -Math.random() * 140 + 10;  // Z along the entire flight path
     }
     return [coords];
-  }, []);
+  }, [isMobile]);
 
   useFrame((_, delta) => {
     if (pointsRef.current) {
@@ -113,16 +113,28 @@ export const UniverseBackground3D: React.FC<UniverseBackground3DProps> = ({
   progress,
   pointer,
 }) => {
+  const isMobile =
+    typeof window !== 'undefined' &&
+    (window.innerWidth < 768 || navigator.maxTouchPoints > 1);
+
+  // Distance culling thresholds: only activate planets within view cone along the Z flight path
+  const showStation1 = progress < 0.38;
+  const showStation2 = progress > 0.12 && progress < 0.58;
+  const showStation3 = progress > 0.32 && progress < 0.78;
+  const showStation4 = progress > 0.52 && progress < 0.95;
+  const showStation5 = progress > 0.70;
+
   return (
     <div className="absolute inset-0 w-full h-full overflow-hidden bg-black pointer-events-none">
       <Canvas
         camera={{ position: [0, 0, 6], fov: 44 }}
-        dpr={[1, 1.5]}
+        dpr={isMobile ? 1 : [1, 1.5]}
         gl={{
           powerPreference: 'high-performance',
-          alpha: true,
-          antialias: true,
+          alpha: false,
+          antialias: !isMobile,
           depth: true,
+          stencil: false,
         }}
         className="w-full h-full"
       >
@@ -135,50 +147,50 @@ export const UniverseBackground3D: React.FC<UniverseBackground3DProps> = ({
         {/* Global Cinematic Ambient Fill */}
         <ambientLight intensity={0.7} />
 
-        {/* Background Starfield */}
+        {/* Background Starfield (optimized count on mobile) */}
         <Stars
           radius={85}
           depth={50}
-          count={1400}
+          count={isMobile ? 650 : 1400}
           factor={3.8}
           saturation={0}
           fade
-          speed={0.4}
+          speed={0.35}
         />
 
         {/* Cosmic Warp Dust streaming through the flight path */}
-        <CosmicWarpDust />
+        <CosmicWarpDust isMobile={isMobile} />
 
         {/* ============================================================== */}
-        {/* CELESTIAL STATIONS: Positioned spatially along the flight path */}
+        {/* CELESTIAL STATIONS: Culling far stations to optimize mobile GPU */}
         {/* ============================================================== */}
 
         {/* Station 01: CirSave (Neo Electric Cyan Cryptographic Core & Ledger Rings) */}
-        <group position={[-2.4, 0, -16]}>
+        <group position={[-2.4, 0, -16]} visible={showStation1}>
           <pointLight position={[2, 3, 3]} intensity={4.2} color="#00F0FF" distance={18} />
           <PlanetCirSave pointer={pointer} />
         </group>
 
         {/* Station 02: Divine Heritage (Neo Cyber Mint Jade Core, Dust Rings & Moons) */}
-        <group position={[2.4, 0, -42]}>
+        <group position={[2.4, 0, -42]} visible={showStation2}>
           <pointLight position={[-2, 3, 3]} intensity={4.2} color="#00F5A0" distance={18} />
           <PlanetDivineHeritage pointer={pointer} />
         </group>
 
         {/* Station 03: Maki Is King (Neo Royal Magenta Faceted Gem & Crown Diadem) */}
-        <group position={[-2.4, 0, -68]}>
+        <group position={[-2.4, 0, -68]} visible={showStation3}>
           <pointLight position={[2, 3, 3]} intensity={4.4} color="#E024C3" distance={18} />
           <PlanetMaki pointer={pointer} />
         </group>
 
         {/* Station 04: Explore More (Neo Quantum Violet Dodecahedron & Gimbals) */}
-        <group position={[2.4, 0, -94]}>
+        <group position={[2.4, 0, -94]} visible={showStation4}>
           <pointLight position={[-2, 3, 3]} intensity={4.2} color="#A855F7" distance={18} />
           <PlanetExploreMore pointer={pointer} />
         </group>
 
         {/* Station 05: The Neo Sun // Victor Isaac Macfoy (Monumental Solar Star) */}
-        <group position={[-2.0, 0, -120]}>
+        <group position={[-2.0, 0, -120]} visible={showStation5}>
           <pointLight position={[0, 0, 0]} intensity={5.5} distance={38} color="#FFE600" />
           <pointLight position={[2, 2, 2]} intensity={2.5} distance={20} color="#FFB700" />
           <SunDestination pointer={pointer} />

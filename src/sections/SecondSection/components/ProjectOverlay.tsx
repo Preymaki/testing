@@ -151,7 +151,7 @@ export const ProjectOverlay: React.FC<ProjectOverlayProps> = ({ progress }) => {
           pointerEvents: transitionOpacity > 0.4 ? 'auto' : 'none',
         }}
       >
-        <div className="flex flex-col items-center text-center gap-3 p-6 sm:p-8 rounded-2xl bg-[#090A0E]/60 backdrop-blur-2xl border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.85)] max-w-md">
+        <div className="flex flex-col items-center text-center gap-3 p-6 sm:p-8 rounded-2xl bg-[#090A0E]/85 sm:bg-[#090A0E]/60 backdrop-blur-md sm:backdrop-blur-2xl border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.85)] max-w-md transform-gpu will-change-transform">
           <div className="flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.95)] animate-pulse" />
             <span className="font-mono text-[10px] tracking-[0.25em] text-white/80 uppercase font-bold">
@@ -195,7 +195,7 @@ export const ProjectOverlay: React.FC<ProjectOverlayProps> = ({ progress }) => {
             >
               {/* Glassmorphic Minimalist Project Card */}
               <div
-                className="w-full max-w-md sm:max-w-lg p-6 sm:p-8 rounded-2xl bg-[#090A0E]/75 backdrop-blur-2xl border border-white/12 flex flex-col gap-4 text-left transition-transform duration-200"
+                className="w-full max-w-md sm:max-w-lg p-6 sm:p-8 rounded-2xl bg-[#090A0E]/90 sm:bg-[#090A0E]/75 backdrop-blur-md sm:backdrop-blur-2xl border border-white/12 flex flex-col gap-4 text-left transition-transform duration-200 transform-gpu will-change-transform"
                 style={{
                   transform: `translateY(${translateY}px)`,
                   boxShadow: `0 0 50px rgba(0,0,0,0.85), 0 0 35px ${stage.accentColor}18`,

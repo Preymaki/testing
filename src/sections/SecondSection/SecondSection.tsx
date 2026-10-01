@@ -8,24 +8,37 @@ export const SecondSection: React.FC = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [pointer, setPointer] = useState({ x: 0, y: 0 });
 
-  // High-performance scroll tracking loop with rAF
+  // High-performance scroll tracking loop with rAF and cached layout geometry (zero layout thrashing)
   useEffect(() => {
     let animationFrameId: number;
+    let cachedTop = 0;
+    let cachedHeight = 0;
 
-    const handleScroll = () => {
+    const measureLayout = () => {
       const container = containerRef.current;
       if (!container) return;
-
       const rect = container.getBoundingClientRect();
+      cachedTop = rect.top + window.scrollY;
+      cachedHeight = rect.height;
+    };
+
+    measureLayout();
+
+    const handleScroll = () => {
+      if (cachedHeight === 0) measureLayout();
       const windowHeight = window.innerHeight;
-      const totalScrollable = rect.height - windowHeight;
+      const totalScrollable = cachedHeight - windowHeight;
 
       if (totalScrollable <= 0) return;
 
-      const scrolled = -rect.top;
-      const progress = Math.max(0, Math.min(1, scrolled / totalScrollable));
+      const scrolled = window.scrollY - cachedTop;
+      const rawProgress = Math.max(0, Math.min(1, scrolled / totalScrollable));
 
-      setScrollProgress(progress);
+      setScrollProgress((prev) => {
+        // Prevent micro-rerenders if progress change is negligible
+        if (Math.abs(prev - rawProgress) < 0.0006) return prev;
+        return rawProgress;
+      });
     };
 
     const onScroll = () => {
@@ -33,19 +46,25 @@ export const SecondSection: React.FC = () => {
       animationFrameId = requestAnimationFrame(handleScroll);
     };
 
+    const onResize = () => {
+      measureLayout();
+      handleScroll();
+    };
+
     window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll, { passive: true });
+    window.addEventListener('resize', onResize, { passive: true });
     handleScroll(); // Initial position calculation
 
     return () => {
       window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onScroll);
+      window.removeEventListener('resize', onResize);
       cancelAnimationFrame(animationFrameId);
     };
   }, []);
 
-  // Track local mouse pointer for 3D camera and planet parallax tilt
+  // Track mouse pointer for 3D camera parallax (strictly ignore touch drag to keep mobile scrolling buttery smooth)
   const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType === 'touch') return;
     const x = (e.clientX / window.innerWidth) * 2 - 1;
     const y = -(e.clientY / window.innerHeight) * 2 + 1;
     setPointer({ x, y });
@@ -84,7 +103,7 @@ export const SecondSection: React.FC = () => {
       <div id="zone-about" className="absolute top-[450vh] left-0 w-full h-10 pointer-events-none" />
 
       {/* Sticky Fullscreen 3D Universe Viewport */}
-      <div className="sticky top-0 left-0 w-full h-screen overflow-hidden">
+      <div className="sticky top-0 left-0 w-full h-screen overflow-hidden transform-gpu will-change-transform">
         {/* Layer 1: Real-Time Three.js WebGL 3D Continuous Space Universe */}
         <UniverseBackground3D progress={scrollProgress} pointer={pointer} />
 
@@ -100,7 +119,7 @@ export const SecondSection: React.FC = () => {
           <div className="w-full flex flex-col sm:flex-row items-center sm:items-end justify-between gap-4">
             {/* Left: Sector & Active Station */}
             <div className="flex items-center gap-3">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/60 border border-white/10 backdrop-blur-md">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/80 sm:bg-black/60 border border-white/10 backdrop-blur-sm sm:backdrop-blur-md">
                 <Orbit className="w-3.5 h-3.5 text-white/70 animate-[spin_20s_linear_infinite]" />
                 <span className="font-mono text-[10px] tracking-[0.2em] text-white/80 uppercase font-semibold">
                   {getSectorLabel()}

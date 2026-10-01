@@ -12,6 +12,7 @@ import { ErrorBoundary } from './components/ui/ErrorBoundary';
 export const App: React.FC = () => {
   const mousePos = useMousePosition();
   const [activeTarget, setActiveTarget] = useState<NavTarget>('home');
+  const [isHeroVisible, setIsHeroVisible] = useState(true);
 
   const handleSelectTarget = (target: NavTarget) => {
     setActiveTarget(target);
@@ -28,12 +29,15 @@ export const App: React.FC = () => {
     }
   };
 
-  // Sync active navigation target with real-time scroll position
+  // Sync active navigation target and hero visibility with real-time scroll position
   useEffect(() => {
     const handleScrollNav = () => {
       const scrollY = window.scrollY;
       const windowHeight = window.innerHeight;
       const docHeight = document.documentElement.scrollHeight;
+
+      // Track if hero 3D canvas is still in viewport (pause WebGL render loop when scrolled away)
+      setIsHeroVisible(scrollY < windowHeight * 1.15);
 
       // Contact / Footer
       if (scrollY + windowHeight >= docHeight - 80) {
@@ -78,7 +82,7 @@ export const App: React.FC = () => {
         {/* Zone 1: Header (Origin / 3D Canvas Layer) */}
         <div className="relative w-full h-screen overflow-hidden">
           <ErrorBoundary fallbackTitle="3D Canvas Layer">
-            <Experience mousePos={mousePos} />
+            <Experience mousePos={mousePos} isVisible={isHeroVisible} />
           </ErrorBoundary>
 
           {/* Environmental Typography & Header UI Elements */}

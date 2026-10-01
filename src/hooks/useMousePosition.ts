@@ -29,6 +29,23 @@ export function useMousePosition(damping: number = 0.08): MousePosition {
   });
 
   useEffect(() => {
+    let animationFrameId: number | null = null;
+    let isRunning = false;
+
+    const startLoop = () => {
+      if (isRunning) return;
+      isRunning = true;
+      animationFrameId = requestAnimationFrame(tick);
+    };
+
+    const stopLoop = () => {
+      isRunning = false;
+      if (animationFrameId !== null) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = null;
+      }
+    };
+
     const handleMouseMove = (e: MouseEvent) => {
       const halfW = window.innerWidth / 2;
       const halfH = window.innerHeight / 2;
@@ -36,56 +53,50 @@ export function useMousePosition(damping: number = 0.08): MousePosition {
       stateRef.current.targetY = (e.clientY - halfH) / halfH;
       stateRef.current.isTouch = false;
       stateRef.current.isActive = true;
-    };
-
-    const handleTouchMove = (e: TouchEvent) => {
-      if (e.touches.length > 0) {
-        const touch = e.touches[0];
-        const halfW = window.innerWidth / 2;
-        const halfH = window.innerHeight / 2;
-        stateRef.current.targetX = (touch.clientX - halfW) / halfW;
-        stateRef.current.targetY = (touch.clientY - halfH) / halfH;
-        stateRef.current.isTouch = true;
-        stateRef.current.isActive = true;
-      }
+      startLoop();
     };
 
     const handleMouseLeave = () => {
       stateRef.current.targetX = 0;
       stateRef.current.targetY = 0;
       stateRef.current.isActive = false;
+      startLoop();
     };
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    window.addEventListener('touchmove', handleTouchMove, { passive: true });
     document.addEventListener('mouseleave', handleMouseLeave);
-
-    let animationFrameId: number;
 
     const tick = () => {
       const state = stateRef.current;
-      state.currentX += (state.targetX - state.currentX) * damping;
-      state.currentY += (state.targetY - state.currentY) * damping;
+      const dx = state.targetX - state.currentX;
+      const dy = state.targetY - state.currentY;
+
+      state.currentX += dx * damping;
+      state.currentY += dy * damping;
 
       setPos({
         x: state.currentX,
         y: state.currentY,
         targetX: state.targetX,
         targetY: state.targetY,
-        isTouch: state.isTouch,
+        isTouch: false,
         isActive: state.isActive,
       });
 
-      animationFrameId = requestAnimationFrame(tick);
+      // If difference is negligible and not moving, pause the loop to save CPU & battery
+      if (Math.abs(dx) < 0.0008 && Math.abs(dy) < 0.0008) {
+        state.currentX = state.targetX;
+        state.currentY = state.targetY;
+        stopLoop();
+      } else {
+        animationFrameId = requestAnimationFrame(tick);
+      }
     };
-
-    animationFrameId = requestAnimationFrame(tick);
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('touchmove', handleTouchMove);
       document.removeEventListener('mouseleave', handleMouseLeave);
-      cancelAnimationFrame(animationFrameId);
+      stopLoop();
     };
   }, [damping]);
 
